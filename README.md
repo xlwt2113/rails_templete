@@ -20,4 +20,21 @@ rails自定义模版
     命名空间模式生成命令
     $ rails g scaffold Worker::DictItem dict_id:integer name:string val:integer 
 
+如果不想生成测试，js，样式表等文件，可以修改config/application.rb ,替换如下代码禁止不需要的文件生成
 
+
+    config.generators do |g|
+      # g.test_framework :rspec,
+      #   fixtures: true,
+      #   view_specs: false,
+      #   helper_specs: false,
+      #   routing_specs: false,
+      #   controller_specs: true,
+      #   request_specs: false
+      #g.fixture_replacement :factory_girl, dir: "spec/factories"
+
+      g.test_framework  false
+      g.stylesheets     false
+      g.javascripts     false
+      g.helper          false
+    end
