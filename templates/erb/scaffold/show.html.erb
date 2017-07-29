@@ -1,0 +1,25 @@
+<head><meta charset="UTF-8"></head>
+<title>查看详细信息</title>
+<p class="hidden-print" id="notice"></p>
+<div class = "row col-xs-7">
+<span class="col-xs-7 col-xs-offset-7" style="padding-bottom: 20px">
+  <a href="<%= route_url %>/1.pdf" target="_blank"><button class="btn btn-primary">打印</button></a>&nbsp;
+  或&nbsp;<%%= link_to '返回', <%= index_helper %>_path %>
+</span>
+  <table class="table  table-bordered  ">
+    <thead>
+    <tr>
+      <th colspan="2"><div class="col-xs-8 text-center"><h2>查看详细信息</h2></div></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% attributes.reject(&:password_digest?).each do |attribute| -%>
+    <tr>
+      <td class="active"><%= attribute.human_name %></td>
+      <td style="word-break:break-all;"><%%= @<%= singular_table_name %>.<%= attribute.name %> %></td>
+    </tr>
+    <% end -%>
+    </tbody>
+  </table>
+</div>

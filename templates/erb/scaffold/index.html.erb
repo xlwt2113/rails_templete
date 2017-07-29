@@ -1,0 +1,79 @@
+<h1><%= plural_table_name.titleize %></h1>
+<form name="<%= plural_table_name %>_form" class="navbar-form navbar-right form-group-sm" role="search">
+  <div class="form-group">
+    <a href="<%= route_url %>?clear_params=1">清空搜索</a>
+    <div class="input-group">
+      <input class="form-control" id="rq_begin_sc" name="rq_begin_sc" value="<%%=session[:rq_begin_sc]%>" size=10 type="text" readonly="true" data-provide='datepicker' data-date-format="yyyy-mm-dd" ,  placeholder="开始日期"  />
+      <div id='clear_rq_b' class="input-group-addon">X</div>
+    </div>
+    -
+    <div class="input-group">
+      <input class="form-control" id="rq_end_sc" name="rq_end_sc" value="<%%=session[:rq_end_sc]%>" size=10  type="text" readonly="true" data-provide='datepicker' data-date-format="yyyy-mm-dd" ,  placeholder="结束日期" />
+      <div id='clear_rq_e' class="input-group-addon">X</div>
+    </div>
+
+
+    <!--
+    //样例代码，拷贝修改后使用
+    //店铺下拉选择
+    <%%= select_tag "shop_sc", options_from_collection_for_select(Shop.all, "id", "name",(session[:shop_sc] unless session[:shop_sc].blank?)), prompt: "4S店", class: "form-control" %>
+    //文本域
+    <%%= text_field_tag 'distance_begin_sc', session[:distance_begin_sc],  class: "form-control" ,size: 6,placeholder: '开始公里'%>
+    //下拉选择
+    <%%= select_tag 'check_sc',options_for_select([["入库申请",""],["审核中","否"],["审核通过","是"],["退回","退回"]],session[:check_sc]),:class=>"form-control"%>
+    //勾选
+    <input type=checkbox name='is_rk_sc'  <%="#{'checked' unless @is_rk_sc.blank?}" %> >已入库
+    -->
+
+    <button type="submit" class="btn btn-primary btn-sm" onclick="document.<%= plural_table_name %>_form.action='<%= route_url %>';document.<%= plural_table_name %>_form.submit();">搜索</button>
+    <button type="submit" class="btn btn-primary btn-sm" onclick="document.<%= plural_table_name %>_form.action='<%= route_url %>.xls';document.<%= plural_table_name %>_form.submit();">导出</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+      <th><%= attribute.human_name %></th>
+<% end -%>
+      <th><%%= link_to '新增', new_<%= singular_table_name %>_path %></th>
+    </tr>
+  </thead>
+    <tbody>
+        <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+      <tr>
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
+<% end -%>
+        <td>
+        <%%= link_to '查看', <%= singular_table_name %> %>
+        <%%= link_to '修改', edit_<%= singular_table_name %>_path(<%= singular_table_name %>) %>
+        <%%= link_to '删除', <%= singular_table_name %>, method: :delete, data: { confirm: '确定要删除吗??' } %>
+        </td>
+      </tr>
+    <%% end %>
+    </tbody>
+    </table>
+
+<br>
+<%%= will_paginate @<%= plural_table_name %>, renderer: BootstrapPagination::Rails %>
+<label class="btn btn-success navbar-right">总条数：<%%= @<%= plural_table_name %>.total_entries%></label>
+<br />
+
+
+
+
+<!-- 添加清空日期条件事件 -->
+<script type="text/javascript">
+  jQuery(function($) {
+    //日期控件
+    $('#clear_rq_b').click(function (){
+        $("#rq_begin_sc").val("");
+    });
+    $('#clear_rq_e').click(function (){
+        $("#rq_end_sc").val("");
+    });
+    //消息提示控件
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+</script>
