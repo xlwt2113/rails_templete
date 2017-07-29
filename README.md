@@ -17,7 +17,7 @@ rails自定义模版
 
     普通生成命令    
     $ rails g scaffold Post title:string category_id:integer body:text
-    命名空间模式生成命令
+    命名空间模式生成命令，用于新模块的开发，Worker是模块名称，DictItem是模块的中的对象
     $ rails g scaffold Worker::DictItem dict_id:integer name:string val:integer 
 
 如果不想生成测试，js，样式表等文件，可以修改config/application.rb ,替换如下代码禁止不需要的文件生成
