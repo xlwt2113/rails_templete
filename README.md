@@ -1,6 +1,6 @@
 # rails_templete
 rails自定义模版
-
+1111
 
 
 这个是 Rails 默认模板的定制，用于公司开发时的基础代码生成。 
