@@ -5,7 +5,6 @@ require_dependency "<%= namespaced_path %>/application_controller"
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
-  before_action :get_user_role, only:[:index]
 
   # GET <%= route_url %>
   def index
@@ -100,15 +99,6 @@ class <%= controller_class_name %>Controller < ApplicationController
     redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} 删除成功.'" %>
   end
 
-  #获取权限
-  def get_user_role
-    @is_admin=current_user.has_role? :admin
-    @is_es_sale=current_user.has_role? :es_sale
-    @is_es_saleclerk=current_user.has_role? :es_saleclerk
-    @is_es_admin=current_user.has_role? :es_admin
-    @is_finclerk=current_user.has_role? :es_finclerk
-    @is_es_cw=current_user.has_role? :es_cw
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
