@@ -1,7 +1,7 @@
 <%%= form_for(@<%= singular_table_name %>, :html => {:class => "form-horizontal"}) do |f| %>
 
     <%%=error_messages_for(@<%= singular_table_name %>)%>
-<div class="col-sm-6">
+<div class="col-sm-7">
 <% attributes.each do |attribute| -%>
     <div class="form-group form-group-lg">
       <label class="col-sm-2 control-label"><%%= f.label :<%= attribute.column_name %> %><font color="red">*</font></label>
